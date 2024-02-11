@@ -7,9 +7,15 @@ function time() {
     let hour = date.getHours();
     let minutes = date.getMinutes();
 
+    if (minutes.length == 1) {
+        let minutesCorrected = `0${minutes}`;
+    } else {
+        minutesCorrected = minutes;
+    }
+
     const timeNow = document.createElement('p');
     clock.append(timeNow);
-    timeNow.innerText = `${hour}:${minutes}`;
+    timeNow.innerText = `${hour}:${minutesCorrected}`;
 }
 time()
 
