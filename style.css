@@ -1,5 +1,6 @@
  * {
      background-color: #cad2c5;
+     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
  }
 
  #clock {
@@ -10,4 +11,12 @@
 
  #todaysDate {
      color: #2f3e46;
+ }
+
+ /* Tasks list */
+
+
+ #tasksList {
+     list-style-type: none;
+     font-size: 1rem;
  }

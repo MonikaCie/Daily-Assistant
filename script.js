@@ -84,9 +84,62 @@ setInterval(date(), 1000)
 
 // -----: TO DO LIST :-----
 
-const inputToDo = document.getElementById('inputToDo');
+const tasksInput = document.getElementById('tasksInput');
 const addBtn = document.getElementById('addBtn');
-const toDoList = document.getElementById('toDoList');
+const tasksList = document.getElementById('tasksList');
+
+let checkbox;
+let newTask;
+
+// Adding tasks
+
+addBtn.addEventListener('click', () => {
+    // li item
+    newTask = document.createElement('li');
+    newTask.innerText = tasksInput.value;
+    tasksList.append(newTask);
+    // assign id to newTask
+    newTask.setAttribute('id', 'newTaskId')
+
+    // checkbox
+    checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    newTask.append(checkbox)
+    // assign id to checkbox
+    checkbox.setAttribute('id', 'checkboxId');
+
+    // clear
+    tasksInput.value = ""
+    tasksInput.focus()
+
+
+    test.addEventListener('click', () => {
+        if (checkboxId.checked) {
+            newTaskId.style.textDecoration = 'line-through'
+        } else {
+            newTaskID.style.textDecoration = 'none'
+        }
+    })
+})
+
+test.addEventListener('click', () => {
+    if (test.checked) {
+        test2.style.textDecoration = 'line-through'
+    } else {
+        test2.style.textDecoration = 'none'
+    }
+})
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -106,11 +159,6 @@ const toDoList = document.getElementById('toDoList');
 
 // })
 
-addBtn.addEventListener('click', newItem())
 
 
-function newItem() {
-    let li = document.createElement('li');
-    let inputText = inputToDo.value;
-    console.log(inputText)
-}
+
