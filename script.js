@@ -1,6 +1,7 @@
 // -----: CLOCK :-----
 
 const clock = document.getElementById('clock');
+const clockFace = document.getElementById('clockFace');
 
 function time() {
     let date = new Date();
@@ -21,23 +22,30 @@ function time() {
         hourCorrected = hour;
     }
 
-    const timeNow = document.createElement('p');
-    clock.append(timeNow);
-    timeNow.innerText = `${hourCorrected}:${minutesCorrected}`;
+    // const timeNow = document.createElement('p');
+    // clock.append(timeNow);
+    clockFace.innerText = `${hourCorrected}:${minutesCorrected}`;
 
-    timeNow.style.backgroundColor = '#2f3e46';
-    timeNow.style.width = '200px';
-    timeNow.style.fontFamily = '';
-    timeNow.style.fontSize = '3rem';
-    timeNow.style.borderRadius = '10px'
-    timeNow.style.padding = '10px'
+
+
+    clockFace.style.backgroundColor = '#2f3e46';
+    clockFace.style.width = '200px';
+    clockFace.style.fontFamily = '';
+    clockFace.style.fontSize = '3rem';
+    clockFace.style.borderRadius = '10px'
+    clockFace.style.padding = '10px'
 
 }
 
-setInterval(time(), 1000);
+setInterval(time, 1000);
 
 
 console.log(new Date())
+
+
+
+
+
 
 // -----: DATE :-----
 
@@ -75,12 +83,18 @@ function date() {
         "December"
     ];
 
-    const dateNow = document.createElement('p');
-    todaysDate.append(dateNow);
-    dateNow.innerText = `${dayName[day]}, ${dayDate} ${monthName[monthDate]} ${yearDate}`
+    // const dateNow = document.createElement('p');
+    // todaysDate.append(dateNow);
+    const dateFace = document.getElementById('dateFace');
+    dateFace.innerText = `${dayName[day]}, ${dayDate} ${monthName[monthDate]} ${yearDate}`
 
 }
-setInterval(date(), 1000)
+// setInterval(date, 1000)
+
+
+
+
+
 
 // -----: TO DO LIST :-----
 
@@ -90,8 +104,13 @@ const tasksList = document.getElementById('tasksList');
 
 let checkbox;
 let newTask;
+let checkboxId;
+let newTaskID;
+
+retriveFromLocalStorage()
 
 // Adding tasks
+
 
 addBtn.addEventListener('click', () => {
     // li item
@@ -99,36 +118,139 @@ addBtn.addEventListener('click', () => {
     newTask.innerText = tasksInput.value;
     tasksList.append(newTask);
     // assign id to newTask
-    newTask.setAttribute('id', 'newTaskId')
+    newTask.setAttribute('id', `newTask${document.querySelectorAll("li").length}`)
 
     // checkbox
     checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     newTask.append(checkbox)
+    checkbox.addEventListener('click', lineThrough)
     // assign id to checkbox
-    checkbox.setAttribute('id', 'checkboxId');
+    checkbox.setAttribute('id', `checkbox${document.querySelectorAll("li").length}`);
+
+    // delete btn
+    deleteBtn = document.createElement('button');
+    newTask.append(deleteBtn)
+    deleteBtn.addEventListener('click', deleteTask);
 
     // clear
     tasksInput.value = ""
     tasksInput.focus()
 
+    console.log(document.querySelectorAll("li").length)
 
-    test.addEventListener('click', () => {
-        if (checkboxId.checked) {
-            newTaskId.style.textDecoration = 'line-through'
-        } else {
-            newTaskID.style.textDecoration = 'none'
-        }
-    })
+    deleteBtn.style.height = '20px';
+    deleteBtn.style.width = '20px';
+    deleteBtn.style.backgroundColor = '#2f3e46'
+    deleteBtn.style.color = '#cad2c5'
 })
 
-test.addEventListener('click', () => {
-    if (test.checked) {
-        test2.style.textDecoration = 'line-through'
+// Line through
+
+function lineThrough(event) {
+    let task = event.target.parentElement;
+    if (checkbox.checked == true) {
+        task.style.textDecoration = 'line-through'
     } else {
-        test2.style.textDecoration = 'none'
+        task.style.textDecoration = 'none'
     }
-})
+}
+
+// function lineThrough() {
+//     for (let i = 1; i < document.querySelectorAll("li").length; i++) {
+//         if (document.getElementById("checkbox" + i).innerHTML.checked) {
+//             document.getElementById("newTask" + i).innerHTML.style.textDecoration = 'line-through'
+//         } else {
+//             document.getElementById("newTask" + i).innerHTML.style.textDecoration = 'none'
+//         }
+//     }
+// }
+
+// function lineThrough() {
+//     for (let i = 1; i < document.querySelectorAll("li").length; i++) {
+//         if (checkbox[i].checked) {
+//             newTask[i].style.textDecoration = 'line-through'
+//         } else {
+//             newTask[i].style.textDecoration = 'none'
+//         }
+//     }
+// }
+
+// function lineThrough() {
+//     if (checkbox`${document.querySelectorAll("li").length}`.checked) {
+//         newTask`${document.querySelectorAll("li").length}`.style.textDecoration = 'line-through'
+//     } else {
+//         newTask`${document.querySelectorAll("li").length}`.style.textDecoration = 'none'
+//     }
+// }
+
+
+
+
+// Deleting tasks
+
+function deleteTask() {
+    let task = event.target.parentElement;
+    tasksList.removeChild(task);
+    // Deleting from local storage
+    localStorage.clear()
+    savingToLocalStorage()
+}
+
+
+// Local Storage
+
+// Saving to local storage
+
+addBtn.addEventListener('click', savingToLocalStorage);
+function savingToLocalStorage() {
+    let tasks = [];
+    let tasksItems = tasksList.getElementsByTagName('li');
+
+    for (let i = 0; i < tasksItems.length; i++) {
+        tasks.push(tasksItems[i].textContent);
+    }
+    localStorage.setItem('tasks', JSON.stringify(tasks))
+
+    // console.log(tasksItems.length)
+    // console.log(tasksItems)
+    // console.log(localStorage)
+}
+
+
+// Loading from local storage
+function retriveFromLocalStorage() {
+    let tasks = JSON.parse(localStorage.getItem('tasks'));
+
+    if (tasks) {
+        tasks.forEach(taskText => {
+            let li = document.createElement('li');
+            li.textContent = taskText;
+            tasksList.appendChild(li);
+
+            // checkbox
+            let checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.addEventListener('click', lineThrough)
+            li.appendChild(checkbox);
+
+            // delete button
+            let deleteBtn = document.createElement('button');
+            li.appendChild(deleteBtn);
+            deleteBtn.addEventListener('click', deleteTask);
+
+
+            deleteBtn.style.height = '20px';
+            deleteBtn.style.width = '20px';
+            deleteBtn.style.backgroundColor = '#2f3e46'
+            deleteBtn.style.color = '#cad2c5'
+        }
+
+        )
+
+    }
+
+}
 
 
 
@@ -143,21 +265,10 @@ test.addEventListener('click', () => {
 
 
 
-// addBtn.addEventListener('click', () => {
-//     let checkbox = document.createElement('input');
-//     checkbox.type = 'checkbox';
-//     checkbox.id = 'checkboxId'
-//     toDoList.append(checkbox);
 
-//     let label = document.createElement('label');
-//     label.htmlFor = 'checkboxId';
-//     label.innerText = inputToDo.value;
-//     toDoList.append(label)
 
-//     inputToDo.value = ""
-//     inputToDo.focus()
 
-// })
+
 
 
 
