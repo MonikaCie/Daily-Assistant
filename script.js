@@ -83,13 +83,15 @@ function date() {
         "December"
     ];
 
-    // const dateNow = document.createElement('p');
-    // todaysDate.append(dateNow);
-    const dateFace = document.getElementById('dateFace');
+    const dateFace = document.getElementById('dateFace')
+
     dateFace.innerText = `${dayName[day]}, ${dayDate} ${monthName[monthDate]} ${yearDate}`
 
+    // const dateNow = document.createElement('p');
+    // todaysDate.append(dateNow);
+    // dateNow.innerText = `${dayName[day]}, ${dayDate} ${monthName[monthDate]} ${yearDate}`
 }
-// setInterval(date, 1000)
+setInterval(date(), 1000)
 
 
 
