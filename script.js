@@ -22,25 +22,18 @@ function time() {
         hourCorrected = hour;
     }
 
-    // const timeNow = document.createElement('p');
-    // clock.append(timeNow);
     clockFace.innerText = `${hourCorrected}:${minutesCorrected}`;
-
-
 
     clockFace.style.backgroundColor = '#2f3e46';
     clockFace.style.width = '200px';
     clockFace.style.fontFamily = '';
     clockFace.style.fontSize = '3rem';
-    clockFace.style.borderRadius = '10px'
-    clockFace.style.padding = '10px'
-
+    clockFace.style.borderRadius = '10px';
+    clockFace.style.padding = '10px';
 }
-
+time()
 setInterval(time, 1000);
-
-
-console.log(new Date())
+console.log(new Date());
 
 
 
@@ -82,16 +75,11 @@ function date() {
         "November",
         "December"
     ];
-
-    const dateFace = document.getElementById('dateFace')
-
-    dateFace.innerText = `${dayName[day]}, ${dayDate} ${monthName[monthDate]} ${yearDate}`
-
-    // const dateNow = document.createElement('p');
-    // todaysDate.append(dateNow);
-    // dateNow.innerText = `${dayName[day]}, ${dayDate} ${monthName[monthDate]} ${yearDate}`
+    const dateFace = document.getElementById('dateFace');
+    dateFace.innerText = `${dayName[day]}, ${dayDate} ${monthName[monthDate]} ${yearDate}`;
 }
-setInterval(date(), 1000)
+date()
+setInterval(date, 1000);
 
 
 
@@ -105,56 +93,60 @@ const addBtn = document.getElementById('addBtn');
 const tasksList = document.getElementById('tasksList');
 
 let checkbox;
-let newTask;
+
 let checkboxId;
 let newTaskID;
+
+let nextId = 0;
 
 retriveFromLocalStorage()
 
 // Adding tasks
 
-
 addBtn.addEventListener('click', () => {
     // li item
+    let newTask;
     newTask = document.createElement('li');
     newTask.innerText = tasksInput.value;
     tasksList.append(newTask);
     // assign id to newTask
-    newTask.setAttribute('id', `newTask${document.querySelectorAll("li").length}`)
+    newTask.setAttribute('id', `newTask${nextId++}`)
+    // newTask.setAttribute('id', `newTask${document.querySelectorAll("li").length}`);
 
     // checkbox
     checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
-    newTask.append(checkbox)
-    checkbox.addEventListener('click', lineThrough)
+    newTask.append(checkbox);
+    checkbox.addEventListener('click', lineThrough);
     // assign id to checkbox
     checkbox.setAttribute('id', `checkbox${document.querySelectorAll("li").length}`);
 
     // delete btn
     deleteBtn = document.createElement('button');
-    newTask.append(deleteBtn)
+    newTask.append(deleteBtn);
     deleteBtn.addEventListener('click', deleteTask);
 
     // clear
-    tasksInput.value = ""
-    tasksInput.focus()
+    tasksInput.value = "";
+    tasksInput.focus();
 
-    console.log(document.querySelectorAll("li").length)
+    console.log(document.querySelectorAll("li").length);
 
     deleteBtn.style.height = '20px';
     deleteBtn.style.width = '20px';
-    deleteBtn.style.backgroundColor = '#2f3e46'
-    deleteBtn.style.color = '#cad2c5'
+    deleteBtn.style.backgroundColor = '#2f3e46';
+    deleteBtn.style.color = '#cad2c5';
 })
 
 // Line through
 
 function lineThrough(event) {
+
     let task = event.target.parentElement;
-    if (checkbox.checked == true) {
-        task.style.textDecoration = 'line-through'
+    if (event.target.checked == true) {
+        task.style.textDecoration = 'line-through';
     } else {
-        task.style.textDecoration = 'none'
+        task.style.textDecoration = 'none';
     }
 }
 
@@ -186,19 +178,15 @@ function lineThrough(event) {
 //     }
 // }
 
-
-
-
 // Deleting tasks
 
 function deleteTask() {
     let task = event.target.parentElement;
     tasksList.removeChild(task);
     // Deleting from local storage
-    localStorage.clear()
-    savingToLocalStorage()
+    localStorage.clear();
+    savingToLocalStorage();
 }
-
 
 // Local Storage
 
@@ -212,15 +200,11 @@ function savingToLocalStorage() {
     for (let i = 0; i < tasksItems.length; i++) {
         tasks.push(tasksItems[i].textContent);
     }
-    localStorage.setItem('tasks', JSON.stringify(tasks))
-
-    // console.log(tasksItems.length)
-    // console.log(tasksItems)
-    // console.log(localStorage)
+    localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-
 // Loading from local storage
+
 function retriveFromLocalStorage() {
     let tasks = JSON.parse(localStorage.getItem('tasks'));
 
@@ -233,7 +217,7 @@ function retriveFromLocalStorage() {
             // checkbox
             let checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
-            checkbox.addEventListener('click', lineThrough)
+            checkbox.addEventListener('click', lineThrough);
             li.appendChild(checkbox);
 
             // delete button
@@ -241,17 +225,13 @@ function retriveFromLocalStorage() {
             li.appendChild(deleteBtn);
             deleteBtn.addEventListener('click', deleteTask);
 
-
             deleteBtn.style.height = '20px';
             deleteBtn.style.width = '20px';
-            deleteBtn.style.backgroundColor = '#2f3e46'
-            deleteBtn.style.color = '#cad2c5'
+            deleteBtn.style.backgroundColor = '#2f3e46';
+            deleteBtn.style.color = '#cad2c5';
         }
-
         )
-
     }
-
 }
 
 
@@ -259,15 +239,79 @@ function retriveFromLocalStorage() {
 
 
 
+// -----: WEATHER :-----
+
+// fetch("https://api.open-meteo.com/v1/forecast?latitude=51.5085&longitude=-0.1257&daily=temperature_2m_max,temperature_2m_min&forecast_days=3")
+//     .then(response => response.json())
+//     .then(data => console.log(data))
+//     .catch(error => console.error(error));
 
 
+// Min & Max Temperature
+
+fetchData()
+
+async function fetchData() {
+    try {
+
+        const response = await fetch("https://api.open-meteo.com/v1/forecast?latitude=51.5085&longitude=-0.1257&daily=temperature_2m_max,temperature_2m_min&forecast_days=3")
+
+        if (!response.ok) {
+            throw new Error("Could not fetch");
+        }
+        const data = await response.json();
+        console.log(data)
 
 
+        const tempToday = document.getElementById('tempToday');
+        const tempTomorrow = document.getElementById('tempTomorrow');
 
+        tempToday.innerText = `max: ${data.daily.temperature_2m_max[0]}°C min: ${data.daily.temperature_2m_min[0]}°C`
+            ;
+        tempTomorrow.innerText = `max: ${data.daily.temperature_2m_max[1]}°C min: ${data.daily.temperature_2m_min[1]}°C`
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
 
+// Rain & Clouds
 
+fetchRain();
 
+async function fetchRain() {
+    try {
 
+        const response = await fetch("https://api.open-meteo.com/v1/forecast?latitude=51.5085&longitude=-0.1257&daily=rain_sum&timezone=Europe%2FLondon&forecast_days=3")
+
+        if (!response.ok) {
+            throw new Error("Could not fetch");
+        }
+        const data = await response.json();
+        console.log(data);
+
+        const rainToday = document.getElementById('rainToday');
+        const rainTomorrow = document.getElementById('rainTomorrow');
+
+        let totalRainToday = data.daily.rain_sum[0];
+        let totalRainTomorrow = data.daily.rain_sum[1];
+
+        if (totalRainToday > 0) {
+            rainToday.innerText = "Rain";
+        } else {
+            rainToday.innerText = "No rain";
+        }
+
+        if (totalRainTomorrow > 0) {
+            rainTomorrow.innerText = "Rain";
+        } else {
+            rainTomorrow.innerText = "No rain";
+        }
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
 
 
 
