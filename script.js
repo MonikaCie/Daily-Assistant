@@ -119,12 +119,14 @@ addBtn.addEventListener('click', () => {
     newTask.append(checkbox);
     checkbox.addEventListener('click', lineThrough);
     // assign id to checkbox
-    checkbox.setAttribute('id', `checkbox${document.querySelectorAll("li").length}`);
+    checkbox.setAttribute('id', `checkbox${nextId++}`);
 
     // delete btn
     deleteBtn = document.createElement('button');
     newTask.append(deleteBtn);
     deleteBtn.addEventListener('click', deleteTask);
+    // assign id to delete button
+    deleteBtn.setAttribute('id', `deleteBtn${nextId++}`)
 
     // clear
     tasksInput.value = "";
