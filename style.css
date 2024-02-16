@@ -16,7 +16,7 @@
  } */
 
  #clockFace {
-     background-color: #2D6A4F;
+     /* background-color: #2D6A4F; */
      width: 180px;
      font-size: 2rem;
      font-weight: bold;
@@ -25,24 +25,24 @@
      margin: 10px;
      padding: 5px;
      border-radius: 2px;
-     box-shadow: 0px 0px 20px 10px#1B4332;
+     /* box-shadow: 0px 0px 20px 10px#1B4332; */
  }
 
 
  #todaysDate {
-     color: #2f3e46;
+     /* color: #2f3e46; */
      margin: 10px;
  }
 
  #dateFace {
-     background-color: #2D6A4F;
+     /* background-color: #2D6A4F; */
      width: 300px;
      font-size: 1.5rem;
-     color: #D8F3DC;
+     color: white;
      text-align: center;
      padding: 5px;
      border-radius: 2px;
-     box-shadow: 0px 0px 20px 10px#1B4332;
+     /* box-shadow: 0px 0px 20px 10px#1B4332; */
  }
 
  #timeAndDate {
@@ -57,6 +57,22 @@
      display: flex;
      justify-content: space-evenly;
      padding: 20px;
+     box-shadow: 0px 0px 50px 1px#1B4332;
+     margin-top: 30px;
+     margin-bottom: 50px;
+     margin-left: 0;
+     margin-right: 0;
+ }
+
+ .header {
+     font-size: 1.5rem;
+     font-weight: 300;
+     text-align: center;
+ }
+
+ .weatherDetails {
+     font-size: rem;
+     text-align: center;
  }
 
  /* Tasks list */
@@ -64,5 +80,31 @@
 
  #tasksList {
      list-style-type: none;
+     font-size: 1rem;
+ }
+
+ #toDo {
+     margin-left: 20px;
+     margin-right: 20px;
+     border: 20px;
+     border-color: white;
+ }
+
+ #tasksInput {
+     margin: 5px;
+     box-shadow: 0px 0px 5px 1px#1B4332;
+     border-color: #1B4332;
+     border-radius: 2px;
+     width: 300px;
+     height: 40px;
+     margin-top: 20px;
+     font-size: 1rem;
+
+ }
+
+ #addBtn {
+     width: 60px;
+     height: 40px;
+     background-color: #1B4332;
      font-size: 1rem;
  }
