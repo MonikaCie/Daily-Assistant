@@ -111,7 +111,7 @@ addBtn.addEventListener('click', () => {
     tasksList.append(newTask);
     // assign id to newTask
     newTask.setAttribute('id', `newTask${nextId++}`)
-    // newTask.setAttribute('id', `newTask${document.querySelectorAll("li").length}`);
+    // newTask.innerHTML = contenteditable = "true"
 
     // checkbox
     checkbox = document.createElement('input');
@@ -128,6 +128,24 @@ addBtn.addEventListener('click', () => {
     // assign id to delete button
     deleteBtn.setAttribute('id', `deleteBtn${nextId++}`)
 
+    // edit btn
+    editBtn = document.createElement('button');
+    newTask.append(editBtn);
+    editBtn.addEventListener('click', edit);
+    editBtn.addEventListener('click', function () {
+        saveBtn.hidden = false;
+    })
+
+    // save btn
+    saveBtn = document.createElement('button');
+    newTask.append(saveBtn)
+    saveBtn.addEventListener('click', savingToLocalStorage)
+    saveBtn.hidden = true
+
+
+
+
+
     // clear
     tasksInput.value = "";
     tasksInput.focus();
@@ -138,12 +156,33 @@ addBtn.addEventListener('click', () => {
     deleteBtn.style.width = '20px';
     deleteBtn.style.backgroundColor = '#2f3e46';
     deleteBtn.style.color = '#cad2c5';
+    editBtn.style.height = '20px';
+    editBtn.style.width = '20px';
+    editBtn.style.backgroundColor = 'blue';
+    saveBtn.style.height = '20px';
+    saveBtn.style.width = '20px';
+    saveBtn.style.backgroundColor = 'green';
 })
+
+// Edit function
+
+function edit(event) {
+    let task = event.target.parentElement;
+    task.contentEditable = true;
+}
+
+// Save function
+
+// function save(event) {
+//     let task = event.target.parentElement;
+//     let updatedTask = task.innerText;
+//     console.log(updatedTask)
+// }
+
 
 // Line through
 
 function lineThrough(event) {
-
     let task = event.target.parentElement;
     if (event.target.checked == true) {
         task.style.textDecoration = 'line-through';
@@ -205,6 +244,28 @@ function savingToLocalStorage() {
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
+// checkbox status
+function savingCheckboxes() {
+    let checkboxes = [];
+    let checkbox = tasksList.getElementsByTagName('input');
+    // let checked = [];
+
+    for (let i = 0; i < checkbox.length; i++) {
+        checkboxes.push(checkbox[i].checked)
+    }
+
+    localStorage.setItem(`checkboxes`, JSON.stringify(checkboxes))
+}
+setInterval(savingCheckboxes, 1000)
+
+function checkboxById() {
+    let checkbox = tasksList.getElementsByTagName('input');
+    console.log(checkbox)
+
+}
+checkboxById()
+
+
 // Loading from local storage
 
 function retriveFromLocalStorage() {
@@ -215,38 +276,84 @@ function retriveFromLocalStorage() {
             let li = document.createElement('li');
             li.textContent = taskText;
             tasksList.appendChild(li);
+            li.setAttribute('id', `newTask${nextId++}`)
+
 
             // checkbox
             let checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.addEventListener('click', lineThrough);
             li.appendChild(checkbox);
+            checkbox.setAttribute('id', `checkbox${nextId++}`)
 
             // delete button
             let deleteBtn = document.createElement('button');
             li.appendChild(deleteBtn);
             deleteBtn.addEventListener('click', deleteTask);
 
+            // edit button
+            let editBtn = document.createElement('button');
+            li.appendChild(editBtn);
+            editBtn.addEventListener('click', edit);
+            editBtn.addEventListener('click', function () {
+                saveBtn.hidden = false;
+            })
+
+            // save button
+            let saveBtn = document.createElement('button');
+            li.appendChild(saveBtn);
+            saveBtn.addEventListener('click', savingToLocalStorage)
+            saveBtn.hidden = true;
+
+            // checkbox state
+
+
+
             deleteBtn.style.height = '20px';
             deleteBtn.style.width = '20px';
             deleteBtn.style.backgroundColor = '#2f3e46';
             deleteBtn.style.color = '#cad2c5';
+            editBtn.style.height = '20px';
+            editBtn.style.width = '20px';
+            editBtn.style.backgroundColor = 'blue';
+            saveBtn.style.height = '20px';
+            saveBtn.style.width = '20px';
+            saveBtn.style.backgroundColor = 'green';
         }
         )
     }
 }
 
+// checkbox status
 
+
+
+// for (i = 0; i < 10; i++) {
+//     let checked = JSON.parse(localStorage.getItem('checkboxes'));
+//     console.log(checked)
+//     document.getElementById(`checkbox`).checked = checked;
+// }
+
+// addBtn.addEventListener('click', function () {
+//     let checkboxes = [];
+//     let checkbox = tasksList.getElementsByTagName('input');
+//     // let checked = [];
+
+//     console.log(checkbox)
+
+//     for (let i = 0; i < checkbox.length; i++) {
+//         checkboxes.push(checkbox[i].checked)
+//     }
+
+//     localStorage.setItem(`checkboxes`, JSON.stringify(checkboxes))
+// }
+// )
 
 
 
 
 // -----: WEATHER :-----
 
-// fetch("https://api.open-meteo.com/v1/forecast?latitude=51.5085&longitude=-0.1257&daily=temperature_2m_max,temperature_2m_min&forecast_days=3")
-//     .then(response => response.json())
-//     .then(data => console.log(data))
-//     .catch(error => console.error(error));
 
 
 // Min & Max Temperature
@@ -276,6 +383,10 @@ async function fetchData() {
         console.error(error);
     }
 }
+
+// Editing tasks
+
+
 
 // Rain & Clouds
 
@@ -314,7 +425,6 @@ async function fetchRain() {
         console.error(error);
     }
 }
-
 
 
 
