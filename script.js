@@ -24,12 +24,12 @@ function time() {
 
     clockFace.innerText = `${hourCorrected}:${minutesCorrected}`;
 
-    clockFace.style.backgroundColor = '#2f3e46';
-    clockFace.style.width = '200px';
-    clockFace.style.fontFamily = '';
-    clockFace.style.fontSize = '3rem';
-    clockFace.style.borderRadius = '10px';
-    clockFace.style.padding = '10px';
+    // clockFace.style.backgroundColor = '#2f3e46';
+    // clockFace.style.width = '200px';
+    // clockFace.style.fontFamily = '';
+    // clockFace.style.fontSize = '3rem';
+    // clockFace.style.borderRadius = '10px';
+    // clockFace.style.padding = '10px';
 }
 time()
 setInterval(time, 1000);
@@ -101,6 +101,7 @@ let nextId = 0;
 
 retriveFromLocalStorage()
 
+
 // Adding tasks
 
 addBtn.addEventListener('click', () => {
@@ -141,16 +142,12 @@ addBtn.addEventListener('click', () => {
     newTask.append(saveBtn)
     saveBtn.addEventListener('click', savingToLocalStorage)
     saveBtn.hidden = true
-
-
-
+    saveBtn.addEventListener('click', hideSave)
 
 
     // clear
     tasksInput.value = "";
     tasksInput.focus();
-
-    console.log(document.querySelectorAll("li").length);
 
     deleteBtn.style.height = '20px';
     deleteBtn.style.width = '20px';
@@ -164,20 +161,13 @@ addBtn.addEventListener('click', () => {
     saveBtn.style.backgroundColor = 'green';
 })
 
+
 // Edit function
 
 function edit(event) {
     let task = event.target.parentElement;
     task.contentEditable = true;
 }
-
-// Save function
-
-// function save(event) {
-//     let task = event.target.parentElement;
-//     let updatedTask = task.innerText;
-//     console.log(updatedTask)
-// }
 
 
 // Line through
@@ -191,33 +181,6 @@ function lineThrough(event) {
     }
 }
 
-// function lineThrough() {
-//     for (let i = 1; i < document.querySelectorAll("li").length; i++) {
-//         if (document.getElementById("checkbox" + i).innerHTML.checked) {
-//             document.getElementById("newTask" + i).innerHTML.style.textDecoration = 'line-through'
-//         } else {
-//             document.getElementById("newTask" + i).innerHTML.style.textDecoration = 'none'
-//         }
-//     }
-// }
-
-// function lineThrough() {
-//     for (let i = 1; i < document.querySelectorAll("li").length; i++) {
-//         if (checkbox[i].checked) {
-//             newTask[i].style.textDecoration = 'line-through'
-//         } else {
-//             newTask[i].style.textDecoration = 'none'
-//         }
-//     }
-// }
-
-// function lineThrough() {
-//     if (checkbox`${document.querySelectorAll("li").length}`.checked) {
-//         newTask`${document.querySelectorAll("li").length}`.style.textDecoration = 'line-through'
-//     } else {
-//         newTask`${document.querySelectorAll("li").length}`.style.textDecoration = 'none'
-//     }
-// }
 
 // Deleting tasks
 
@@ -228,6 +191,7 @@ function deleteTask() {
     localStorage.clear();
     savingToLocalStorage();
 }
+
 
 // Local Storage
 
@@ -244,6 +208,8 @@ function savingToLocalStorage() {
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
+// 
+
 // checkbox status
 function savingCheckboxes() {
     let checkboxes = [];
@@ -257,14 +223,7 @@ function savingCheckboxes() {
     localStorage.setItem(`checkboxes`, JSON.stringify(checkboxes))
 }
 setInterval(savingCheckboxes, 1000)
-
-function checkboxById() {
-    let checkbox = tasksList.getElementsByTagName('input');
-    console.log(checkbox)
-
-}
-checkboxById()
-
+savingCheckboxes()
 
 // Loading from local storage
 
@@ -272,7 +231,7 @@ function retriveFromLocalStorage() {
     let tasks = JSON.parse(localStorage.getItem('tasks'));
 
     if (tasks) {
-        tasks.forEach(taskText => {
+        tasks.forEach((taskText, index) => {
             let li = document.createElement('li');
             li.textContent = taskText;
             tasksList.appendChild(li);
@@ -302,12 +261,23 @@ function retriveFromLocalStorage() {
             // save button
             let saveBtn = document.createElement('button');
             li.appendChild(saveBtn);
-            saveBtn.addEventListener('click', savingToLocalStorage)
+            saveBtn.addEventListener('click', savingToLocalStorage);
             saveBtn.hidden = true;
+            saveBtn.addEventListener('click', hideSave)
+
+            // hiding save button after saving
+            function hideSave() {
+                saveBtn.hidden = true;
+            }
 
             // checkbox state
+            let checkboxesState = JSON.parse(localStorage.getItem('checkboxes'));
+            checkbox.checked = checkboxesState[index];
 
-
+            // line through for completed items
+            if (checkbox.checked) {
+                li.style.textDecoration = 'line-through';
+            }
 
             deleteBtn.style.height = '20px';
             deleteBtn.style.width = '20px';
@@ -324,30 +294,9 @@ function retriveFromLocalStorage() {
     }
 }
 
-// checkbox status
 
 
 
-// for (i = 0; i < 10; i++) {
-//     let checked = JSON.parse(localStorage.getItem('checkboxes'));
-//     console.log(checked)
-//     document.getElementById(`checkbox`).checked = checked;
-// }
-
-// addBtn.addEventListener('click', function () {
-//     let checkboxes = [];
-//     let checkbox = tasksList.getElementsByTagName('input');
-//     // let checked = [];
-
-//     console.log(checkbox)
-
-//     for (let i = 0; i < checkbox.length; i++) {
-//         checkboxes.push(checkbox[i].checked)
-//     }
-
-//     localStorage.setItem(`checkboxes`, JSON.stringify(checkboxes))
-// }
-// )
 
 
 

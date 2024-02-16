@@ -1,6 +1,7 @@
  * {
-     background-color: #cad2c5;
+     background-color: #081C15;
      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+     color: white;
      margin: 0;
      padding: 1px;
      box-sizing: border-box;
@@ -8,15 +9,54 @@
 
 
 
- #clock {
-     color: #84a98c;
+ /* #clock {
+     color: #1B4332;
      text-align: center;
      margin: 10px;
+ } */
+
+ #clockFace {
+     background-color: #2D6A4F;
+     width: 180px;
+     font-size: 2rem;
+     font-weight: bold;
+     color: white;
+     text-align: center;
+     margin: 10px;
+     padding: 5px;
+     border-radius: 2px;
+     box-shadow: 0px 0px 20px 10px#1B4332;
  }
+
 
  #todaysDate {
      color: #2f3e46;
      margin: 10px;
+ }
+
+ #dateFace {
+     background-color: #2D6A4F;
+     width: 300px;
+     font-size: 1.5rem;
+     color: #D8F3DC;
+     text-align: center;
+     padding: 5px;
+     border-radius: 2px;
+     box-shadow: 0px 0px 20px 10px#1B4332;
+ }
+
+ #timeAndDate {
+     display: flex;
+     justify-content: space-between;
+     align-items: flex-start;
+ }
+
+ /* Weather */
+
+ #weather {
+     display: flex;
+     justify-content: space-evenly;
+     padding: 20px;
  }
 
  /* Tasks list */
