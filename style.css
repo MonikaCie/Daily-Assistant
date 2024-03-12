@@ -75,6 +75,7 @@
      word-spacing: 4px;
  }
 
+
  /* Tasks list */
 
 
@@ -128,17 +129,24 @@
 
  .checkbox {
      margin: 5px;
+     margin-left: 20px;
      width: 20px;
      height: 20px;
+     /* display: flex;
+     align-self: flex-end; */
  }
+
 
  .deleteBtn {
      margin: 5px;
+     margin-left: 10px;
      width: 40px;
      height: 22px;
      background-color: #1B4332;
      font-size: 0.7rem;
+     color: rgb(249, 240, 229);
      cursor: pointer;
+
  }
 
  .deleteBtn:hover {
@@ -151,6 +159,8 @@
      height: 22px;
      background-color: #1B4332;
      font-size: 0.7rem;
+     color: rgb(249, 240, 229);
+
      cursor: pointer;
  }
 
@@ -164,6 +174,7 @@
      height: 22px;
      background-color: #1B4332;
      font-size: 0.7rem;
+     color: rgb(249, 240, 229);
      cursor: pointer;
  }
 
