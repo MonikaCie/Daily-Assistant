@@ -112,7 +112,7 @@ addBtn.addEventListener('click', () => {
     tasksList.append(newTask);
     // assign id to newTask
     newTask.setAttribute('id', `newTask${nextId++}`)
-    // newTask.innerHTML = contenteditable = "true"
+
 
     // checkbox
     checkbox = document.createElement('input');
@@ -121,44 +121,43 @@ addBtn.addEventListener('click', () => {
     checkbox.addEventListener('click', lineThrough);
     // assign id to checkbox
     checkbox.setAttribute('id', `checkbox${nextId++}`);
+    checkbox.setAttribute('class', 'checkbox');
 
     // delete btn
     deleteBtn = document.createElement('button');
     newTask.append(deleteBtn);
+    deleteBtn.textContent = 'Delete';
     deleteBtn.addEventListener('click', deleteTask);
     // assign id to delete button
     deleteBtn.setAttribute('id', `deleteBtn${nextId++}`)
+    deleteBtn.setAttribute('class', 'deleteBtn');
 
     // edit btn
     editBtn = document.createElement('button');
     newTask.append(editBtn);
+    editBtn.textContent = 'Edit';
     editBtn.addEventListener('click', edit);
     editBtn.addEventListener('click', function () {
         saveBtn.hidden = false;
     })
+    editBtn.setAttribute('class', 'editBtn');
 
     // save btn
     saveBtn = document.createElement('button');
-    newTask.append(saveBtn)
-    saveBtn.addEventListener('click', savingToLocalStorage)
-    saveBtn.hidden = true
-    saveBtn.addEventListener('click', hideSave)
+    newTask.append(saveBtn);
+    saveBtn.textContent = 'Save';
+
+    saveBtn.addEventListener('click', savingToLocalStorage);
+    saveBtn.hidden = true;
+    saveBtn.addEventListener('click', hideSave);
+    saveBtn.setAttribute('class', 'saveBtn');
 
 
     // clear
     tasksInput.value = "";
     tasksInput.focus();
 
-    deleteBtn.style.height = '20px';
-    deleteBtn.style.width = '20px';
-    deleteBtn.style.backgroundColor = '#2f3e46';
-    deleteBtn.style.color = '#cad2c5';
-    editBtn.style.height = '20px';
-    editBtn.style.width = '20px';
-    editBtn.style.backgroundColor = 'blue';
-    saveBtn.style.height = '20px';
-    saveBtn.style.width = '20px';
-    saveBtn.style.backgroundColor = 'green';
+
 })
 
 
@@ -243,27 +242,36 @@ function retriveFromLocalStorage() {
             checkbox.type = 'checkbox';
             checkbox.addEventListener('click', lineThrough);
             li.appendChild(checkbox);
-            checkbox.setAttribute('id', `checkbox${nextId++}`)
+            checkbox.setAttribute('id', `checkbox${nextId++}`);
+            checkbox.setAttribute('class', 'checkbox');
 
             // delete button
             let deleteBtn = document.createElement('button');
             li.appendChild(deleteBtn);
+            deleteBtn.textContent = 'Delete';
             deleteBtn.addEventListener('click', deleteTask);
+            deleteBtn.setAttribute('class', 'deleteBtn');
 
             // edit button
             let editBtn = document.createElement('button');
             li.appendChild(editBtn);
+            editBtn.textContent = 'Edit';
             editBtn.addEventListener('click', edit);
             editBtn.addEventListener('click', function () {
                 saveBtn.hidden = false;
             })
+            editBtn.setAttribute('class', 'editBtn');
 
             // save button
             let saveBtn = document.createElement('button');
             li.appendChild(saveBtn);
+            saveBtn.textContent = 'Save';
+
             saveBtn.addEventListener('click', savingToLocalStorage);
             saveBtn.hidden = true;
             saveBtn.addEventListener('click', hideSave)
+            saveBtn.setAttribute('class', 'saveBtn');
+
 
             // hiding save button after saving
             function hideSave() {
@@ -279,16 +287,8 @@ function retriveFromLocalStorage() {
                 li.style.textDecoration = 'line-through';
             }
 
-            deleteBtn.style.height = '20px';
-            deleteBtn.style.width = '20px';
-            deleteBtn.style.backgroundColor = '#2f3e46';
-            deleteBtn.style.color = '#cad2c5';
-            editBtn.style.height = '20px';
-            editBtn.style.width = '20px';
-            editBtn.style.backgroundColor = 'blue';
-            saveBtn.style.height = '20px';
-            saveBtn.style.width = '20px';
-            saveBtn.style.backgroundColor = 'green';
+            deleteBtn.setAttribute('id', 'deleteBtn');
+
         }
         )
     }
@@ -324,9 +324,8 @@ async function fetchData() {
         const tempToday = document.getElementById('tempToday');
         const tempTomorrow = document.getElementById('tempTomorrow');
 
-        tempToday.innerText = `max: ${data.daily.temperature_2m_max[0]}°C min: ${data.daily.temperature_2m_min[0]}°C`
-            ;
-        tempTomorrow.innerText = `max: ${data.daily.temperature_2m_max[1]}°C min: ${data.daily.temperature_2m_min[1]}°C`
+        tempToday.innerText = `max: ${data.daily.temperature_2m_max[0]}°C min: ${data.daily.temperature_2m_min[0]}°C`;
+        tempTomorrow.innerText = `max: ${data.daily.temperature_2m_max[1]}°C    min: ${data.daily.temperature_2m_min[1]}°C`
     }
     catch (error) {
         console.error(error);

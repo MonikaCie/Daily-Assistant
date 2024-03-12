@@ -9,20 +9,17 @@
 
 
 
- /* #clock {
-     color: #1B4332;
-     text-align: center;
-     margin: 10px;
- } */
+
 
  #clockFace {
      /* background-color: #2D6A4F; */
-     width: 180px;
+     width: 130px;
      font-size: 2rem;
      font-weight: bold;
      color: white;
      text-align: center;
-     margin: 10px;
+     margin: 20px;
+     margin-left: 10px;
      padding: 5px;
      border-radius: 2px;
      /* box-shadow: 0px 0px 20px 10px#1B4332; */
@@ -31,18 +28,19 @@
 
  #todaysDate {
      /* color: #2f3e46; */
-     margin: 10px;
+     margin: 20px;
+     margin-right: 10px;
  }
 
  #dateFace {
      /* background-color: #2D6A4F; */
-     width: 300px;
-     font-size: 1.5rem;
+     width: 350px;
+     font-size: 1.8rem;
      color: white;
      text-align: center;
      padding: 5px;
      border-radius: 2px;
-     /* box-shadow: 0px 0px 20px 10px#1B4332; */
+     margin-right: 10px;
  }
 
  #timeAndDate {
@@ -68,11 +66,13 @@
      font-size: 1.5rem;
      font-weight: 300;
      text-align: center;
+     line-height: 2;
  }
 
  .weatherDetails {
-     font-size: rem;
+     font-size: 1.3rem;
      text-align: center;
+     word-spacing: 4px;
  }
 
  /* Tasks list */
@@ -87,18 +87,30 @@
      margin-left: 20px;
      margin-right: 20px;
      border: 20px;
-     border-color: white;
+     box-shadow: 0px 0px 20px 1px#1B4332;
+     display: grid;
+     column-gap: 20px;
+     grid-template-columns: repeat(12, 1fr);
+     grid-template-rows: 3;
+ }
+
+ #toDoHeader {
+     grid-column: 1/13;
+     justify-content: center;
+     padding: 15px;
  }
 
  #tasksInput {
-     margin: 5px;
      box-shadow: 0px 0px 5px 1px#1B4332;
      border-color: #1B4332;
      border-radius: 2px;
-     width: 300px;
+     width: 500px;
      height: 40px;
-     margin-top: 20px;
      font-size: 1rem;
+     grid-row: 2;
+     grid-column: 5/7;
+     justify-content: center;
+     align-items: center;
 
  }
 
@@ -107,4 +119,74 @@
      height: 40px;
      background-color: #1B4332;
      font-size: 1rem;
+     grid-row: 2;
+     grid-column: 7/8;
+     justify-content: center;
+     align-items: center;
+
+ }
+
+ .checkbox {
+     margin: 5px;
+     width: 20px;
+     height: 20px;
+ }
+
+ .deleteBtn {
+     margin: 5px;
+     width: 40px;
+     height: 22px;
+     background-color: #1B4332;
+     font-size: 0.7rem;
+     cursor: pointer;
+ }
+
+ .deleteBtn:hover {
+     background-color: #1e5941;
+ }
+
+ .editBtn {
+     margin: 5px;
+     width: 40px;
+     height: 22px;
+     background-color: #1B4332;
+     font-size: 0.7rem;
+     cursor: pointer;
+ }
+
+ .editBtn:hover {
+     background-color: #1e5941;
+ }
+
+ .saveBtn {
+     margin: 5px;
+     width: 40px;
+     height: 22px;
+     background-color: #1B4332;
+     font-size: 0.7rem;
+     cursor: pointer;
+ }
+
+ .saveBtn:hover {
+     background-color: #1e5941;
+ }
+
+
+ #tasksList {
+     grid-row: 3;
+     grid-column: 5/7;
+     margin-top: 30px;
+     line-height: 40px;
+     margin-bottom: 20px;
+ }
+
+ li:nth-child(odd) {
+     background-color: #1433266b;
+     box-shadow: 0px 0px 5px 0px#1B4332;
+
+ }
+
+ li:nth-child(even) {
+     background-color: #081C15;
+     line-height: 1.5;
  }
