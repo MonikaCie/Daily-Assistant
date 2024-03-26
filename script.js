@@ -24,12 +24,7 @@ function time() {
 
     clockFace.innerText = `${hourCorrected}:${minutesCorrected}`;
 
-    // clockFace.style.backgroundColor = '#2f3e46';
-    // clockFace.style.width = '200px';
-    // clockFace.style.fontFamily = '';
-    // clockFace.style.fontSize = '3rem';
-    // clockFace.style.borderRadius = '10px';
-    // clockFace.style.padding = '10px';
+
 }
 time()
 setInterval(time, 1000);
@@ -147,6 +142,11 @@ addBtn.addEventListener('click', () => {
     newTask.append(saveBtn);
     saveBtn.textContent = 'Save';
 
+    // hiding save button after saving
+    function hideSave() {
+        saveBtn.hidden = true;
+    }
+
     saveBtn.addEventListener('click', savingToLocalStorage);
     saveBtn.hidden = true;
     saveBtn.addEventListener('click', hideSave);
@@ -202,10 +202,12 @@ function savingToLocalStorage() {
     let tasksItems = tasksList.getElementsByTagName('li');
 
     for (let i = 0; i < tasksItems.length; i++) {
-        tasks.push(tasksItems[i].textContent);
+        tasks.push(tasksItems[i].childNodes[0].textContent);
     }
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
+
+
 
 // 
 
@@ -267,16 +269,18 @@ function retriveFromLocalStorage() {
             li.appendChild(saveBtn);
             saveBtn.textContent = 'Save';
 
+            // hiding save button after saving
+            function hideSave() {
+                saveBtn.hidden = true;
+            }
+
             saveBtn.addEventListener('click', savingToLocalStorage);
             saveBtn.hidden = true;
             saveBtn.addEventListener('click', hideSave)
             saveBtn.setAttribute('class', 'saveBtn');
 
 
-            // hiding save button after saving
-            function hideSave() {
-                saveBtn.hidden = true;
-            }
+
 
             // checkbox state
             let checkboxesState = JSON.parse(localStorage.getItem('checkboxes'));
@@ -373,7 +377,6 @@ async function fetchRain() {
         console.error(error);
     }
 }
-
 
 
 
